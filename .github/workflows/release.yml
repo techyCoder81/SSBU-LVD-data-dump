@@ -18,8 +18,9 @@ jobs:
 
     - run: dotnet publish
 
-    - run: "cd Ultimate_LVD_data/bin/Debug/net5.0/publish"
-    - run: "zip -r lvd_dumper.zip *"
+    - run: |
+        cd Ultimate_LVD_data/bin/Debug/net5.0
+        zip -r lvd_dumper.zip publish/*"
 
     - name: Upload release
       uses: svenstaro/upload-release-action@v2
