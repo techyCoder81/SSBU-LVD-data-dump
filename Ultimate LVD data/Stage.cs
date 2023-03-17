@@ -12,6 +12,7 @@ namespace Ultimate_LVD_data
     public static class StageData
     {
         public static Dictionary<string, string> Names = new Dictionary<string, string>();
+        public static Dictionary<string, string> NameIds = new Dictionary<string, string>();
         public static Dictionary<string, string> Names3ds = new Dictionary<string, string>();
         public static Dictionary<string, float> CameraY = new Dictionary<string, float>();
         public enum materialTypes : byte
@@ -64,7 +65,7 @@ namespace Ultimate_LVD_data
 
         public static void Initialize()
         {
-            string read = File.ReadAllText("list.csv", Encoding.UTF8);
+            string read = File.ReadAllText("stage_mappings.csv", Encoding.UTF8);
             foreach (string s in read.Split('\n'))
             {
                 if (!s.Contains(","))
@@ -72,13 +73,25 @@ namespace Ultimate_LVD_data
                     continue;
                 }
                 string[] line = Util.SplitCSV(s.Trim('\r'));
-                string codename = line[0], name = line[1].Replace("\"","").Trim();
-                Names.Add(codename, name);
 
-                if(line.Length > 2)
-                {
-                    CameraY.Add(codename, float.Parse(line[2].Replace("\"", "").Trim()));
+                string codename = line[0];
+                string name = line[1].Replace("\"","").Trim();
+                string nameId = "";
+                if (line.Length > 2 && !String.IsNullOrEmpty(line[2].Trim())) {
+                    // use the name_id if we have it mapped.
+                    nameId = line[2].Trim();
+                } else {
+                    // otherwise, use the human formatted name.
+                    nameId = name.Replace("\'", "")
+                        .Replace(" ", "_");
                 }
+                Names.Add(codename, name);
+                NameIds.Add(codename, nameId);
+
+                //if(line.Length > 2)
+                //{
+                //    CameraY.Add(codename, float.Parse(line[2].Replace("\"", "").Trim()));
+                //}
             }
         }
     }
@@ -133,6 +146,9 @@ namespace Ultimate_LVD_data
         public string stage { get; set; }
         public string name { get; set; }
         public string lvd { get; set; }
+
+        /// the name_id field for this stage, from the stage_mappings.csv
+        public string nameId { get; set; }
         [JsonIgnore]
         public int legal = 0;
         public List<Collision> collisions { get; set; }

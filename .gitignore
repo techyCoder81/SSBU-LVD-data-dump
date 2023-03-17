@@ -197,3 +197,4 @@ FakesAssemblies/
 
 *.elf
 Properties/
+hdr-stages/

@@ -10,6 +10,7 @@ namespace Ultimate_LVD_data
     {
         public string name { get; set; }
         public string gameName { get; set; }
+        public string nameId { get; set; }
         public int Type { get; set; }
 
         public StageId()
@@ -21,7 +22,8 @@ namespace Ultimate_LVD_data
         {
 
             return name == other.name &&
-                gameName == other.gameName && Type == other.Type;
+                gameName == other.gameName && Type == other.Type
+                && nameId == other.nameId;
         }
     }
 }

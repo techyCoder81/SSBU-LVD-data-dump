@@ -10,8 +10,14 @@ namespace Ultimate_LVD_data
 {
     public class Program
     {
+        public const string TRAINING_STAGE = "Training Stage";
+
         static void Main(string[] args)
         {
+            if (args.Length != 1 || args[0] == "help" || args[0] == "--help" || args[0] == "-h") {
+                Console.WriteLine("This application takes one argument: a path to the \'stages\' folder.");
+                return;
+            }
             StageData.Initialize();
 
             List<StageId> stages = processDirectory(new DirectoryInfo(args[0])); //root/stage path from dumped directory from ArcCross
@@ -52,8 +58,8 @@ namespace Ultimate_LVD_data
                             type = 0;
                             break;
                     }
-                    if (type != 0)
-                        continue; //Ignore battle and end lvd due to common stage files
+                    //if (type != 0)
+                    //    continue; //Ignore battle and end lvd due to common stage files
 
                     try
                     {
@@ -106,15 +112,17 @@ namespace Ultimate_LVD_data
 
                                         string stageGameName = Path.GetFileNameWithoutExtension(f.Name);
                                         stageGameName = stageGameName.Substring(0, stageGameName.Length - 2);
+                                        string stageNameId = StageData.NameIds[stageGameName];
                                         int idInt = 0;
-                                        if (!int.TryParse(Path.GetFileNameWithoutExtension(f.Name).Substring(stageGameName.Length, 2), out idInt))
+                                        if (!int.TryParse(Path.GetFileNameWithoutExtension(f.Name)
+                                            .Substring(stageGameName.Length, 2), out idInt))
                                         {
                                             stageGameName = Path.GetFileNameWithoutExtension(f.Name);
                                         }
-                                        if (!stages.ContainsKey(s.name))
-                                            stages.Add(s.name, new List<Stage>());
+                                        if (!stages.ContainsKey(stageNameId))
+                                            stages.Add(stageNameId, new List<Stage>());
 
-                                        stages[s.name].Add(s);
+                                        stages[stageNameId].Add(s);
                                         allStages.Add(s);
 
                                         stageList.Add(Path.GetFileNameWithoutExtension(s.name));
@@ -124,9 +132,10 @@ namespace Ultimate_LVD_data
                                             fdPath = f.FullName;
                                         }
 
-                                        if (!stagesId.Contains(new StageId() { gameName = stageGameName, name = StageData.Names[stageGameName], Type = s.Type }))
+                                        StageId newStage = new StageId() { gameName = stageGameName, name = StageData.Names[stageGameName], nameId = stageNameId, Type = s.Type };
+                                        if (!stagesId.Contains(newStage))
                                         {
-                                            stagesId.Add(new StageId() { gameName = stageGameName, name = StageData.Names[stageGameName], Type = s.Type });
+                                            stagesId.Add(newStage);
                                         }
                                     }
                                 }
@@ -137,7 +146,7 @@ namespace Ultimate_LVD_data
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"param directory not found {stageInfo.Name}\\{typeInfo.Name}");
+                        Console.WriteLine($"param directory not found {stageInfo.Name}\\{typeInfo.Name}, with exception: {ex}");
                     }
                 }
             }
@@ -148,9 +157,12 @@ namespace Ultimate_LVD_data
             if (!Directory.Exists(Path.Combine("output", "stages")))
                 Directory.CreateDirectory(Path.Combine("output", "stages"));
 
-            Stage training = stages["Training Stage"][2];
-
-            stages["Training Stage"] = new List<Stage>() { training };
+            if (stages.ContainsKey(TRAINING_STAGE)) {
+                Stage training = stages[TRAINING_STAGE][2];
+                stages[TRAINING_STAGE] = new List<Stage>() { training };
+            } else {
+                Console.WriteLine("Warning: training stage was not found.");
+            }
 
             foreach (var pair in stages)
             {
