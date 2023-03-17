@@ -183,7 +183,7 @@ namespace Ultimate_LVD_data
                         }
                     }
                 }
-                File.WriteAllText(Path.Combine("output", "stages", pair.Key, "data.json"), JsonConvert.SerializeObject(pair.Value, Formatting.Indented));
+                File.WriteAllText(Path.Combine("output", "stages", pair.Key, "data.json"), JsonConvert.SerializeObject(pair.Value[0], Formatting.Indented));
             }
             //File.WriteAllText(Path.Combine("output", "stagelist.json"), JsonConvert.SerializeObject(stageList, Formatting.Indented));
 
