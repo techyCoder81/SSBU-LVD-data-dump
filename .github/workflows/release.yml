@@ -18,10 +18,8 @@ jobs:
 
     - run: dotnet publish
 
-    - run: ls
-    - run: "ls Ultimate_LVD_data/bin/Debug/net5.0/publish"
-
-    - run: "zip -r lvd_dumper.zip Ultimate_LVD_data/bin/Debug/net5.0/publish/*"
+    - run: "cd Ultimate_LVD_data/bin/Debug/net5.0/publish"
+    - run: "zip -r lvd_dumper.zip *"
 
     - name: Upload release
       uses: svenstaro/upload-release-action@v2
@@ -30,7 +28,7 @@ jobs:
         file: lvd_dumper.zip
         prerelease: true
         file_glob: false
-        asset_name: release
+        asset_name: lvd_dumper.zip
         release_name: HDR LVD Dumper Release
         tag: release
         overwrite: true
