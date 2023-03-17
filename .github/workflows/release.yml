@@ -1,0 +1,35 @@
+name: make release
+on:
+  workflow_dispatch:
+
+jobs:
+  build_release:
+    steps:
+    - name: checkout
+      uses: actions/checkout@v2
+      with: 
+        fetch-depth: 0
+    
+    - name: Setup dotnet
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '5.0.408'
+
+    - run: dotnet publish
+
+    - run: "ls SSBU*/Ultimate_LVD_Data/bin/Debug/net5.0/publish"
+
+    - run: "zip -r lvd_dumper.zip SSBU*/Ultimate_LVD_Data/bin/Debug/net5.0/publish/*"
+
+    - name: Upload release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: lvd_dumper.zip
+        prerelease: true
+        file_glob: false
+        asset_name: release
+        release_name: HDR LVD Dumper Release
+        tag: release
+        overwrite: true
+        body: The latest release of the LVD Dumper for HDR
