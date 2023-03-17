@@ -26,7 +26,7 @@ jobs:
       uses: svenstaro/upload-release-action@v2
       with:
         repo_token: ${{ secrets.GITHUB_TOKEN }}
-        file: lvd_dumper.zip
+        file: Ultimate_LVD_data/bin/Debug/net5.0/lvd_dumper.zip
         prerelease: true
         file_glob: false
         asset_name: lvd_dumper.zip
