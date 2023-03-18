@@ -82,11 +82,14 @@ namespace Ultimate_LVD_data
 
                                 if (lvd != null)
                                 {
-                                    Stage s = new Stage(Path.GetFileNameWithoutExtension(f.Name), f.Name, lvd, type);
+                                    string stageGameName = Path.GetFileNameWithoutExtension(f.Name);
+                                    stageGameName = stageGameName.Substring(0, stageGameName.Length - 2);
+                                    string stageNameId = StageData.NameIds[stageGameName];
+                                    Stage s = new Stage(Path.GetFileNameWithoutExtension(f.Name), f.Name, lvd, stageNameId, type);
                                     if (s.name == "Final Destination (Large)")
                                     {
                                         Smash_Forge.LVD fdlvd = new Smash_Forge.LVD(fdPath);
-                                        Stage fd = new Stage(Path.GetFileNameWithoutExtension(fdPath), fdPath, fdlvd, type);
+                                        Stage fd = new Stage(Path.GetFileNameWithoutExtension(fdPath), fdPath, fdlvd, stageNameId, type);
                                         s.collisions = fd.collisions;
                                         s.valid = true;
                                     }
@@ -109,10 +112,6 @@ namespace Ultimate_LVD_data
                                     }
                                     if (s.valid)
                                     {
-
-                                        string stageGameName = Path.GetFileNameWithoutExtension(f.Name);
-                                        stageGameName = stageGameName.Substring(0, stageGameName.Length - 2);
-                                        string stageNameId = StageData.NameIds[stageGameName];
                                         int idInt = 0;
                                         if (!int.TryParse(Path.GetFileNameWithoutExtension(f.Name)
                                             .Substring(stageGameName.Length, 2), out idInt))

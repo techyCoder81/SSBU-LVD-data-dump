@@ -97,7 +97,7 @@ ShamFight,Quickplay Testing stage
 xgreenhill_,Green Hill Zone,Sonic_Greenhill
 windyhill_,Windy Hill Zone,Sonic_Windyhill
 spiritsroulette,
-spla_parking,Moray Towers,Spla_Parking
+spla_parki,Moray Towers,Spla_Parking
 dummy,Staff Roll
 steetpass_,Find Mii,Mario_3DLand
 tomodachi_,Tomodachi Life,Tomodachi
@@ -119,7 +119,7 @@ xoldin_,Bridge of Eldin,Zelda_Oldin
 xpirates_f_,Pirate Ship,Zelda_Pirates
 skyward,Skyloft,Zelda_Skyward
 zelda_temple_,Hyrule Temple,Zelda_Temple
-zelda_tower,Great Plateau Tower,Zelda_Tower
+zelda_tow,Great Plateau Tower,Zelda_Tower
 train,Spirit Tracks,Zelda_Train
 jack_mementoes_,Mementos,Jack_Mementoes
 level_,Stage Builder
@@ -131,6 +131,6 @@ pickel_world_,Minecraft World,Pickel_World
 ff_cave_,Northern Cave,FF_Cave
 hit_dolly_stadium_,King of Fighters Stadium,Dolly_Stadium
 fe_shrine_,Garreg Mach Monastery,FE_Shrine
-xeno_alst,Cloud Sea of Alrest,Xeno_Alst
-demon_dojo,Mishima Dojo,Demon_Dojo
+xeno_alst_,Cloud Sea of Alrest,Xeno_Alst
+demon_dojo_,Mishima Dojo,Demon_Dojo
 trail_castle,Hollow Bastion,Trail_Castle

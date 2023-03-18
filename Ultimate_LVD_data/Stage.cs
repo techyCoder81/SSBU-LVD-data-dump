@@ -167,8 +167,9 @@ namespace Ultimate_LVD_data
         [JsonIgnore]
         public int Type = 0;
 
-        public Stage(string name, string filename, Smash_Forge.LVD lvd, int type = 0)
+        public Stage(string name, string filename, Smash_Forge.LVD lvd, string stageNameId, int type = 0)
         {
+            this.nameId = stageNameId;
             Type = type;
             string t = name.Substring(0, name.Length - 2);
             string id = name.Substring(name.Length - 2,2);
